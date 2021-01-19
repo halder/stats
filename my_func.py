@@ -4,6 +4,7 @@ def descriptive_stats(data, unbiased=True):
     """
     n = len(data)
     mean = sum(data) / n
+    # median
     if len(data) % 2 != 0:
         half = len(data) // 2
         med = sorted(arr)[half]
@@ -11,14 +12,13 @@ def descriptive_stats(data, unbiased=True):
         half_l = (len(data) // 2) - 1
         half_r = len(data) // 2
         med = (sorted(data)[half_l] + sorted(data)[half_r]) / 2
+    # variance
     if unbiased:
-        var_s = 0
-        for v in data:
-            var_s += (v - mean)**2
-        var = var_s / (n - 1)
+        denom = n - 1
     else:
-        var_s = 0
-        for v in data:
-            var_s += (v - mean)**2
-        var = var_s / n
+        denom = n
+    var_s = 0
+    for v in data:
+        var_s += (v - mean)**2
+    var = var_s / denom
     return mean, var, var**(0.5), med
