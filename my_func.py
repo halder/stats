@@ -1,7 +1,7 @@
 def SQRT(x):
     return x**(1/2)
 
-def descriptive_stats(data, unbiased=True):
+def descriptive_stats(data, unbiased=False):
     """
     pass list/np.array holding raw data
     """
@@ -26,12 +26,14 @@ def descriptive_stats(data, unbiased=True):
     var = var_s / denom
     return mean, var, SQRT(var), med
 
-def standardize(data):
-    # Normalization to N(0,1)
-    # X ~ N(mu,sigma^2) -> Z = (X - mu) / sigma ~ N(0,1)
-    # n >= 30 by CLT
+def z_score(data, estimate):
+    """
+    Normalization to N(0,1)
+    X ~ N(mu,sigma^2) -> Z = (X - mu) / sigma ~ N(0,1)
+    n >= 30 by CLT
+    """
     n = len(data)
     if n < 30:
         print("n < 30; CLT does not apply.")
     mean, _, std, __ = descriptive_stats(data)
-    return [(SQRT(n)/std) * (d - mean) for d in data]
+    return (SQRT(n) / std) * (mean - estimate)
