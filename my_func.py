@@ -1,3 +1,6 @@
+def SQRT(x):
+    return x**(1/2)
+
 def descriptive_stats(data, unbiased=True):
     """
     pass list/np.array holding raw data
@@ -7,7 +10,7 @@ def descriptive_stats(data, unbiased=True):
     # median
     if len(data) % 2 != 0:
         half = len(data) // 2
-        med = sorted(arr)[half]
+        med = sorted(data)[half]
     else:
         half_l = (len(data) // 2) - 1
         half_r = len(data) // 2
@@ -21,4 +24,14 @@ def descriptive_stats(data, unbiased=True):
     for v in data:
         var_s += (v - mean)**2
     var = var_s / denom
-    return mean, var, var**(0.5), med
+    return mean, var, SQRT(var), med
+
+def standardize(data):
+    # Normalization to N(0,1)
+    # X ~ N(mu,sigma^2) -> Z = (X - mu) / sigma ~ N(0,1)
+    # n >= 30 by CLT
+    n = len(data)
+    if n < 30:
+        print("n < 30; CLT does not apply.")
+    mean, _, std, __ = descriptive_stats(data)
+    return [(SQRT(n)/std) * (d - mean) for d in data]
