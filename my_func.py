@@ -26,7 +26,7 @@ def descriptive_stats(data, unbiased=False):
     var = var_s / denom
     return mean, var, SQRT(var), med
 
-def z_score(data, estimate):
+def z_statistic(data, estimate):
     """
     Z Test: Compare sample mean to population mean
     --------------------------------------------------
